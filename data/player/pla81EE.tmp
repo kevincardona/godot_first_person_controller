@@ -1,7 +1,40 @@
 [gd_scene load_steps=9 format=3 uid="uid://cwiu8nsyij4gn"]
 
-[ext_resource type="Script" path="res://data/player/player.gd" id="1_u1w3t"]
 [ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://data/cursors/crosshair001.png" id="2_nq3sk"]
+
+[sub_resource type="GDScript" id="GDScript_vfd5b"]
+script/source = "extends \"res://data/player/player.gd\"
+
+
+const SPEED = 5.0
+const JUMP_VELOCITY = 4.5
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
+
+
+func _physics_process(delta):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+
+	# Handle Jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	move_and_slide()
+"
 
 [sub_resource type="Animation" id="Animation_saxjg"]
 resource_name = "head_bob"
@@ -41,11 +74,7 @@ material = SubResource("StandardMaterial3D_3iwsb")
 
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0)
-script = ExtResource("1_u1w3t")
-base_speed = 5
-sprint_speed = 8
-jump_velocity = 10
-custom_gravity = 25.0
+script = SubResource("GDScript_vfd5b")
 
 [node name="head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -57,6 +86,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0983528, 0)
 libraries = {
 "": SubResource("AnimationLibrary_36ogt")
 }
+
+[node name="interaction" type="RayCast3D" parent="head/camera"]
+target_position = Vector3(0, 0, -5)
+
+[node name="hand" type="Marker3D" parent="head/camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0741091, 0, -0.39646)
 
 [node name="collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_phygr")
