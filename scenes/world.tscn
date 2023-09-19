@@ -1,12 +1,12 @@
-[gd_scene load_steps=39 format=3 uid="uid://dvbgf6drv86br"]
+[gd_scene load_steps=47 format=3 uid="uid://dvbgf6drv86br"]
 
-[ext_resource type="Script" path="res://data/scripts/world.gd" id="1_x87ln"]
-[ext_resource type="Script" path="res://data/player/player.gd" id="2_nhm77"]
-[ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://textures/sky.exr" id="3_c0d65"]
-[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://data/cursors/crosshair001.png" id="3_cn5n6"]
-[ext_resource type="Texture2D" uid="uid://dj3ath06kfi0d" path="res://textures/texture.png" id="4_3fu1o"]
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_x87ln"]
+[ext_resource type="Script" path="res://scripts/player/Player.gd" id="2_t3tdq"]
+[ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://assets/sky.exr" id="3_c0d65"]
+[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://assets/cursors/crosshair001.png" id="3_cn5n6"]
+[ext_resource type="Texture2D" uid="uid://dj3ath06kfi0d" path="res://assets/texture.png" id="4_3fu1o"]
 [ext_resource type="Shader" path="res://scenes/grass.gdshader" id="6_ibvpt"]
-[ext_resource type="Script" path="res://scenes/pickable.gd" id="6_sgo81"]
+[ext_resource type="Script" path="res://scripts/Pickable.gd" id="6_sgo81"]
 
 [sub_resource type="Animation" id="Animation_saxjg"]
 resource_name = "head_bob"
@@ -36,6 +36,8 @@ _data = {
 "reset": SubResource("Animation_1m4wq")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_bvlh8"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_phygr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3iwsb"]
@@ -43,6 +45,44 @@ albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3oyv7"]
 material = SubResource("StandardMaterial3D_3iwsb")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wpuhd"]
+
+[sub_resource type="Animation" id="Animation_iadco"]
+resource_name = "head_bob"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.239392, 1, 0, -0.1, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_m073v"]
+resource_name = "reset"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.00870516, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nngqw"]
+_data = {
+"head_bob": SubResource("Animation_iadco"),
+"reset": SubResource("Animation_m073v")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5uxps"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw6c4"]
+albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_veq48"]
+material = SubResource("StandardMaterial3D_qw6c4")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6bxyf"]
 panorama = ExtResource("3_c0d65")
@@ -136,11 +176,54 @@ albedo_texture = ExtResource("4_3fu1o")
 [node name="world" type="Node3D"]
 script = ExtResource("1_x87ln")
 
+[node name="player2" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.49278, 6.06428, 4.98847)
+floor_max_angle = 1.0472
+script = ExtResource("2_t3tdq")
+player_index = 1
+
+[node name="head" type="Node3D" parent="player2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="camera" type="Camera3D" parent="player2/head"]
+
+[node name="camera_animation" type="AnimationPlayer" parent="player2/head/camera"]
+libraries = {
+"": SubResource("AnimationLibrary_36ogt")
+}
+
+[node name="interaction" type="RayCast3D" parent="player2/head/camera"]
+target_position = Vector3(0, 0, -5)
+
+[node name="hand" type="Node3D" parent="player2/head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.877204, -0.596372, -0.990734)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player2/head"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+mesh = SubResource("BoxMesh_bvlh8")
+
+[node name="collision" type="CollisionShape3D" parent="player2"]
+shape = SubResource("CapsuleShape3D_phygr")
+
+[node name="hud_camera" type="Camera2D" parent="player2"]
+
+[node name="crosshair" type="Sprite2D" parent="player2/hud_camera"]
+scale = Vector2(3, 3)
+texture = ExtResource("3_cn5n6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player2"]
+visible = false
+mesh = SubResource("CapsuleMesh_3oyv7")
+skeleton = NodePath("../../player2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="player2"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, -0.672561, 0)
+mesh = SubResource("BoxMesh_wpuhd")
+
 [node name="player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106976, 2.61168, 0.914289)
-script = ExtResource("2_nhm77")
-air_dampening = 1.0
-custom_gravity = 30.0
+floor_max_angle = 1.0472
+script = ExtResource("2_t3tdq")
 
 [node name="head" type="Node3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -149,7 +232,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="camera_animation" type="AnimationPlayer" parent="player/head/camera"]
 libraries = {
-"": SubResource("AnimationLibrary_36ogt")
+"": SubResource("AnimationLibrary_nngqw")
 }
 
 [node name="interaction" type="RayCast3D" parent="player/head/camera"]
@@ -159,7 +242,7 @@ target_position = Vector3(0, 0, -5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.877204, -0.596372, -0.990734)
 
 [node name="collision" type="CollisionShape3D" parent="player"]
-shape = SubResource("CapsuleShape3D_phygr")
+shape = SubResource("CapsuleShape3D_5uxps")
 
 [node name="hud_camera" type="Camera2D" parent="player"]
 
@@ -168,7 +251,8 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_cn5n6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
-mesh = SubResource("CapsuleMesh_3oyv7")
+visible = false
+mesh = SubResource("CapsuleMesh_veq48")
 
 [node name="environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xj5u1")

@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://diavijvctxhom"]
+
+[ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_afsat"]
+[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://assets/cursors/crosshair001.png" id="2_xqvld"]
+
+[sub_resource type="Animation" id="Animation_saxjg"]
+resource_name = "head_bob"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.239392, 1, 0, -0.1, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_1m4wq"]
+resource_name = "reset"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.00870516, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_36ogt"]
+_data = {
+"head_bob": SubResource("Animation_saxjg"),
+"reset": SubResource("Animation_1m4wq")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_phygr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3iwsb"]
+albedo_color = Color(0.917647, 0.529412, 0.168627, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3oyv7"]
+material = SubResource("StandardMaterial3D_3iwsb")
+
+[node name="player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106976, 2.61168, 0.914289)
+floor_max_angle = 1.0472
+script = ExtResource("1_afsat")
+base_speed = 6
+sprint_speed = 8
+jump_velocity = 10
+air_dampening = 1.0
+custom_gravity = 25.0
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="camera" type="Camera3D" parent="head"]
+
+[node name="camera_animation" type="AnimationPlayer" parent="head/camera"]
+libraries = {
+"": SubResource("AnimationLibrary_36ogt")
+}
+
+[node name="interaction" type="RayCast3D" parent="head/camera"]
+target_position = Vector3(0, 0, -5)
+
+[node name="hand" type="Node3D" parent="head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.877204, -0.596372, -0.990734)
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_phygr")
+
+[node name="hud_camera" type="Camera2D" parent="."]
+
+[node name="crosshair" type="Sprite2D" parent="hud_camera"]
+scale = Vector2(3, 3)
+texture = ExtResource("2_xqvld")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_3oyv7")

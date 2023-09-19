@@ -10,4 +10,4 @@ The goal of this repo is to have dynamic player controllers to be used in many d
 <br>
 
 --------------------------------
-> Day 5 of Godot
+> Day 5-6 of Godot
