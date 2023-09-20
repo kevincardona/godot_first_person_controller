@@ -1,22 +1,23 @@
-class_name PlayerConfig
 extends Resource
+class_name PlayerConfig
 
-@export var base_speed = 10
-@export var sprint_speed = 10
-@export var jump_velocity = 6
-@export var mouse_sensitivity = 0.1
-@export var controller_sensitivity = 1000
-@export var controller_look_smoothness = 0.2
-@export var accel = 10
-@export var decel = 10
-@export var air_dampening = 0.8
+@export var base_speed: float = 6
+@export var sprint_speed: float = 10
+@export var jump_velocity: float = 9
+@export var mouse_sensitivity: float = 0.1
+@export var controller_sensitivity: float = 1000
+@export var controller_look_smoothness: float = 0.2
+@export var accel: int = 10
+@export var decel: int = 10
+@export var air_dampening: float = 0.8
 @export var default_gravity: bool = false
-@export var custom_gravity: float = 15
-@export var walk_camera_fov = 75.0
-@export var run_camera_fov = 85.0
-@export var camera_fov_transition_speed = 5
-@export var drop_object_speed = 10
-@export var coyote_time_duration = 0.15
+@export var custom_gravity: float = 25
+@export var walk_camera_fov: float = 75.0
+@export var run_camera_fov: float = 85.0
+@export var camera_fov_transition_speed: int = 5
+@export var drop_object_speed: int = 10
+@export var coyote_time_duration: float = 0.15
+@export var has_inventory: bool = true
 
 # Set these actions in the InputMap
 @export var interact: String = "player_interact"
@@ -32,6 +33,7 @@ extends Resource
 @export var look_right: String = "player_look_right"
 @export var look_up: String = "player_look_up"
 @export var look_down: String = "player_look_down"
+@export var open_inventory: String = "player_open_inventory"
 
 func get_player_actions():
 	var filtered_actions = []

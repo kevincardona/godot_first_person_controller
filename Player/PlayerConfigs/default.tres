@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="PlayerConfig" load_steps=2 format=3 uid="uid://b3e46mm5cgere"]
+
+[ext_resource type="Script" path="res://Player/PlayerConfig.gd" id="1_kigo5"]
+
+[resource]
+script = ExtResource("1_kigo5")
+base_speed = 6
+sprint_speed = 10
+jump_velocity = 9
+mouse_sensitivity = 0.1
+controller_sensitivity = 1000
+controller_look_smoothness = 0.2
+accel = 10
+decel = 10
+air_dampening = 0.8
+default_gravity = false
+custom_gravity = 25.0
+walk_camera_fov = 75.0
+run_camera_fov = 85.0
+camera_fov_transition_speed = 5
+drop_object_speed = 10
+coyote_time_duration = 0.15
+interact = "player_interact"
+drop = "player_drop"
+move_left = "player_move_left"
+move_right = "player_move_right"
+move_forward = "player_move_forward"
+move_backward = "player_move_backward"
+move_jump = "player_move_jump"
+move_sprint = "player_move_sprint"
+move_crouch = "player_move_crouch"
+look_left = "player_look_left"
+look_right = "player_look_right"
+look_up = "player_look_up"
+look_down = "player_look_down"

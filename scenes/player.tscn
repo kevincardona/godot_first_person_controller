@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://diavijvctxhom"]
+[gd_scene load_steps=9 format=3 uid="uid://bufgkjaec7xbv"]
 
-[ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_afsat"]
-[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://assets/cursors/crosshair001.png" id="2_xqvld"]
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_a7qv2"]
+[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://Assets/Cursors/crosshair001.png" id="2_tidjq"]
 
 [sub_resource type="Animation" id="Animation_saxjg"]
 resource_name = "head_bob"
@@ -42,12 +42,7 @@ material = SubResource("StandardMaterial3D_3iwsb")
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106976, 2.61168, 0.914289)
 floor_max_angle = 1.0472
-script = ExtResource("1_afsat")
-base_speed = 6
-sprint_speed = 8
-jump_velocity = 10
-air_dampening = 1.0
-custom_gravity = 25.0
+script = ExtResource("1_a7qv2")
 
 [node name="head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -72,7 +67,7 @@ shape = SubResource("CapsuleShape3D_phygr")
 
 [node name="crosshair" type="Sprite2D" parent="hud_camera"]
 scale = Vector2(3, 3)
-texture = ExtResource("2_xqvld")
+texture = ExtResource("2_tidjq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
