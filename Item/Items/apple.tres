@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://d4f5d4tbsaika"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://d4f5d4tbsaika"]
 
-[ext_resource type="Script" path="res://Item/ItemData.gd" id="1_3pttt"]
+[ext_resource type="Script" path="res://Item/InventoryItem.gd" id="1_an3ov"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dl0pw"]
 load_path = "res://.godot/imported/#1 - Transparent Icons.png-31bbcd01018c7f351ce8bbd1960a685b.ctex"
@@ -10,9 +10,10 @@ atlas = SubResource("CompressedTexture2D_dl0pw")
 region = Rect2(0, 448, 32, 32)
 
 [resource]
-script = ExtResource("1_3pttt")
-name = "Apple"
+script = ExtResource("1_an3ov")
+item_name = "Apple"
+item_id = 0
 description = ""
+texture = SubResource("AtlasTexture_6jige")
 stackable = false
 max_stack = 64
-texture = SubResource("AtlasTexture_6jige")

@@ -5,9 +5,9 @@
 [ext_resource type="Script" path="res://Player/PlayerConfig.gd" id="3_fmgcg"]
 [ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://Assets/Cursors/crosshair001.png" id="3_s2esf"]
 [ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://Assets/sky.exr" id="4_ylorc"]
-[ext_resource type="Script" path="res://Inventory/Inventory.gd" id="5_3btri"]
 [ext_resource type="Texture2D" uid="uid://dj3ath06kfi0d" path="res://Assets/texture.png" id="5_shwoq"]
 [ext_resource type="Script" path="res://Item/Pickable.gd" id="7_1rcfb"]
+[ext_resource type="PackedScene" uid="uid://bd38h0jxknb5i" path="res://Inventory/inventory.tscn" id="8_0siei"]
 
 [sub_resource type="Resource" id="Resource_k5a8b"]
 script = ExtResource("3_fmgcg")
@@ -281,12 +281,11 @@ skeleton = NodePath("../../player2")
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, -0.672561, 0)
 mesh = SubResource("BoxMesh_wpuhd")
 
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("inventory")]
+[node name="player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106976, 2.61168, 0.914289)
 floor_max_angle = 1.0472
 script = ExtResource("2_vf4tl")
 config = SubResource("Resource_q40bp")
-inventory = NodePath("../UI/Inventory")
 
 [node name="head" type="Node3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -486,26 +485,11 @@ shape = SubResource("BoxShape3D_tajfl")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Inventory" type="Node" parent="UI"]
-script = ExtResource("5_3btri")
-
-[node name="InventoryContainer" type="PanelContainer" parent="UI/Inventory"]
-visible = false
+[node name="player_inventory" parent="UI" instance=ExtResource("8_0siei")]
 offset_left = 960.0
 offset_top = 540.0
 offset_right = 1000.0
 offset_bottom = 580.0
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/Inventory/InventoryContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="ItemGrid" type="GridContainer" parent="UI/Inventory/InventoryContainer/MarginContainer"]
-layout_mode = 2
-columns = 6
 
 [connection signal="area_entered" from="fall_buffer" to="." method="_on_area_3d_area_entered"]
 [connection signal="body_entered" from="fall_buffer" to="." method="_on_area_3d_body_entered"]

@@ -1,7 +1,11 @@
 extends CharacterBody3D
 
-@export var player_index = 0
+signal open_game_menu
+
+@export var player_index: int = 0
+@export var player_name: String = "Steve"
 @export var config: PlayerConfig = null
+@export var inventory: Inventory = null
 
 var speed = 0
 var sprinting = false
@@ -11,6 +15,7 @@ var coyote_timer = 0.0
 var can_jump = true
 var picked_up_object = false
 var inventory_opened = false
+var freeze_movement = false # TODO: Should probably be a stack
 
 @onready var head = $head
 @onready var camera = $head/camera
@@ -20,7 +25,7 @@ var inventory_opened = false
 
 func _ready():
 	if config == null:
-		push_error("config is not defined for ", self.name, "...")
+		push_error(self.name, " config is undefined...")
 		return
 	camera.current = true
 	if not config.default_gravity:
@@ -28,8 +33,10 @@ func _ready():
 	config.register_player_controls(player_index)
 
 func _physics_process(delta):
-	if config:
-		handle_inventory(delta)
+	if config == null:
+		return
+	handle_inventory(delta)
+	if !freeze_movement:
 		handle_sprinting(delta)
 		handle_interaction(delta)
 		handle_gravity_and_jumping(delta)
@@ -38,12 +45,19 @@ func _physics_process(delta):
 
 # Handlers
 func handle_inventory(delta):
-	if Input.is_action_pressed(config.open_inventory):
-		pass
-#		if (inventory_opened):
-#			inventory.close()
-#		else:
-#			inventory.open()
+	if Input.is_action_just_released(config.open_inventory):
+		if inventory == null:
+			push_warning("Player tried to open the inventory but doesn't have one!")
+			return
+		if not inventory_opened:
+			inventory.open()
+			inventory_opened = true
+			freeze_movement = true
+		else:
+			inventory.close()
+			inventory_opened = false
+			freeze_movement = false
+			
 
 func handle_interaction(delta):
 	if reach.is_colliding():
@@ -84,7 +98,7 @@ func handle_gravity_and_jumping(delta):
 		can_jump = false
 
 func _input(event):
-	if config && event is InputEventMouseMotion && player_index == 0:
+	if not freeze_movement && config && event is InputEventMouseMotion && player_index == 0:
 		head.rotation_degrees.y -= event.relative.x * config.mouse_sensitivity
 		head.rotation_degrees.x -= event.relative.y * config.mouse_sensitivity
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
