@@ -12,7 +12,7 @@ const SLOT = preload("res://inventory/slot.tscn")
 var is_open: bool = false
 
 func _ready():
-	var test_inv = load("res://Inventory/test_inventory_data.tres")
+	var test_inv = load("res://Inventory/sample_inventory.tres")
 
 func toggle_open():
 	is_open = !is_open

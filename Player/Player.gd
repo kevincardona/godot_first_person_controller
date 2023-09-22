@@ -7,15 +7,16 @@ signal open_game_menu
 @export var config: PlayerConfig = null
 @export var inventory: Inventory = null
 
+var gravity
 var speed = 0
 var sprinting = false
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var toggled_sprint = false
 var coyote_timer = 0.0
 var can_jump = true
 var picked_up_object = false
 var inventory_opened = false
-var freeze_movement = false # TODO: Should probably be a stack
+var freeze_movement = false
+var ladders_entered = 0
 
 @onready var head = $head
 @onready var camera = $head/camera
@@ -23,14 +24,20 @@ var freeze_movement = false # TODO: Should probably be a stack
 @onready var reach = $head/camera/interaction
 @onready var hand = $head/hand
 
+enum State {
+	NORMAL,
+	LADDER
+}
+
+var current_state = State.NORMAL
+
 func _ready():
 	if config == null:
 		push_error(self.name, " config is undefined...")
 		return
 	camera.current = true
-	if not config.default_gravity:
-		gravity = config.custom_gravity
 	config.register_player_controls(player_index)
+	gravity = config.gravity
 
 func _physics_process(delta):
 	if config == null:
@@ -39,9 +46,10 @@ func _physics_process(delta):
 	if !freeze_movement:
 		handle_sprinting(delta)
 		handle_interaction(delta)
-		handle_gravity_and_jumping(delta)
-		handle_movement(delta)
 		handle_held_object(delta)
+		handle_movement(delta)
+		handle_gravity_and_jumping(delta)
+		move_and_slide()
 
 # Handlers
 func handle_inventory(delta):
@@ -108,18 +116,17 @@ func handle_movement(delta):
 	var direction = move_dir.normalized().rotated(-head.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	var accel_rate = config.accel if not direction == Vector3(0, 0, 0) else config.decel
-	if is_on_floor():
+	if is_on_floor() || current_state == State.NORMAL:
 		velocity.x = lerp(velocity.x, direction.x * speed, accel_rate * delta)
 		velocity.z = lerp(velocity.z, direction.z * speed, accel_rate * delta)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed * config.air_dampening, config.accel * delta / 5)
 		velocity.z = lerp(velocity.z, direction.z * speed * config.air_dampening, config.accel * delta / 5)
 
-	if move_dir.length() > 0.01 and is_on_floor():
+	if move_dir.length() > 0.01 and is_on_floor() and State.NORMAL:
 		camera_animation.play("head_bob", 0.5)
 	else:
 		camera_animation.play("reset", 0.5)
-	move_and_slide()
 	
 	var look_dir = Input.get_vector(config.look_right, config.look_left, config.look_up, config.look_down)
 	var target_rotation_x = head.rotation_degrees.x - look_dir.y * config.controller_sensitivity * delta
@@ -128,3 +135,12 @@ func handle_movement(delta):
 		head.rotation_degrees.x = lerp(head.rotation_degrees.x, target_rotation_x, config.controller_look_smoothness)
 		head.rotation_degrees.y = lerp(head.rotation_degrees.y, target_rotation_y, config.controller_look_smoothness)
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
+	if current_state == State.LADDER:
+		gravity = 0
+		if Input.is_action_pressed(config.move_forward):
+			velocity.y = config.climb_speed
+		else:
+			velocity.y = -config.climb_speed
+	else:
+		gravity = config.gravity

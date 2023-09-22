@@ -9,5 +9,17 @@ The goal of this repo is to have dynamic player controllers to be used in many d
 
 <br>
 
+## INCLUDES
+* Player Configuration
+* Smooth movement
+* Item pick-up/throw
+* Air control
+* Coyote timer
+* Ladder movement
+* Dynamic local multiplayer controller mapping
+* Configurable Inventory System (WIP)
+
+<br>
+
 --------------------------------
-> Day 5-9 of Godot
+> Day 5-10 of Godot

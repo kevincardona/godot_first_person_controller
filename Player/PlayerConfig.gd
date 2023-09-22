@@ -1,16 +1,19 @@
 extends Resource
 class_name PlayerConfig
 
+var _gravity: float = -9.8
+
 @export var base_speed: float = 6
 @export var sprint_speed: float = 10
 @export var jump_velocity: float = 9
+@export var climb_speed: float = 4
 @export var mouse_sensitivity: float = 0.1
 @export var controller_sensitivity: float = 1000
 @export var controller_look_smoothness: float = 0.2
 @export var accel: int = 10
 @export var decel: int = 10
 @export var air_dampening: float = 0.8
-@export var default_gravity: bool = false
+@export var use_default_gravity: bool = false
 @export var custom_gravity: float = 25
 @export var walk_camera_fov: float = 75.0
 @export var run_camera_fov: float = 85.0
@@ -18,6 +21,14 @@ class_name PlayerConfig
 @export var drop_object_speed: int = 10
 @export var coyote_time_duration: float = 0.15
 @export var has_inventory: bool = true
+@export var gravity: float:
+	get:
+		if use_default_gravity:
+			return ProjectSettings.get_setting("physics/3d/default_gravity")
+		else:
+			return custom_gravity
+	set(value):
+		_gravity = value
 
 # Set these actions in the InputMap
 @export var interact: String = "player_interact"
@@ -34,6 +45,9 @@ class_name PlayerConfig
 @export var look_up: String = "player_look_up"
 @export var look_down: String = "player_look_down"
 @export var open_inventory: String = "player_open_inventory"
+
+func initialize():
+	_gravity = use_default_gravity and ProjectSettings.get_setting("physics/3d/default_gravity") or custom_gravity
 
 func get_player_actions():
 	var filtered_actions = []
