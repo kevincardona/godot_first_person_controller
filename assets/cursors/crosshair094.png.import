@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qpsjxm12gs34"
-path="res://.godot/imported/crosshair094.png-047ff3575ace09d5596473db2d44bf6b.ctex"
+path="res://.godot/imported/crosshair094.png-9f2dd6c03669b6c782b51c5f01f67a57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Cursors/crosshair094.png"
-dest_files=["res://.godot/imported/crosshair094.png-047ff3575ace09d5596473db2d44bf6b.ctex"]
+source_file="res://Assets/cursors/crosshair094.png"
+dest_files=["res://.godot/imported/crosshair094.png-9f2dd6c03669b6c782b51c5f01f67a57.ctex"]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_h15hu"]
 [ext_resource type="Script" path="res://Player/PlayerConfig.gd" id="2_eahuk"]
-[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://Assets/Cursors/crosshair001.png" id="3_0ot0r"]
-[ext_resource type="PackedScene" uid="uid://cijc88yddar15" path="res://Scenes/level.tscn" id="4_7ayx3"]
+[ext_resource type="Texture2D" uid="uid://bubwl36108v2r" path="res://Assets/cursors/crosshair001.png" id="3_0ot0r"]
+[ext_resource type="PackedScene" uid="uid://cijc88yddar15" path="res://scenes/level.tscn" id="4_7ayx3"]
 [ext_resource type="Script" path="res://Inventory/Inventory.gd" id="5_m4ehn"]
 
 [sub_resource type="Resource" id="Resource_hgb05"]
@@ -244,7 +244,6 @@ mesh = SubResource("CapsuleMesh_tapn6")
 script = ExtResource("5_m4ehn")
 
 [node name="InventoryContainer" type="PanelContainer" parent="ui/Inventory"]
-visible = false
 offset_left = 960.0
 offset_top = 540.0
 offset_right = 1000.0
