@@ -1,13 +1,14 @@
-[gd_scene load_steps=50 format=3 uid="uid://cijc88yddar15"]
+[gd_scene load_steps=51 format=3 uid="uid://cijc88yddar15"]
 
 [ext_resource type="Texture2D" uid="uid://bfmbndv1sge56" path="res://Assets/sky.exr" id="1_y1p7r"]
-[ext_resource type="Texture2D" uid="uid://dj3ath06kfi0d" path="res://Assets/texture.png" id="2_dshw8"]
 [ext_resource type="Script" path="res://Item/Pickable.gd" id="3_76gyr"]
 [ext_resource type="Script" path="res://Scripts/fall_buffer.gd" id="3_aivpx"]
 [ext_resource type="Script" path="res://Scripts/Ladder.gd" id="5_b6p5d"]
-[ext_resource type="Texture2D" uid="uid://dekq8vbuyr36h" path="res://Assets/prototype/prototype_512x512_grey1.png" id="6_4mclt"]
+[ext_resource type="Texture2D" uid="uid://dekq8vbuyr36h" path="res://Assets/Prototype/prototype_512x512_grey1.png" id="6_4mclt"]
+[ext_resource type="Texture2D" uid="uid://blvstx01ypd3n" path="res://Assets/SBS - Texture Grid Pack/512x512/Gray/Prototype_Grid_Gray_10-512x512.png" id="6_pgcrs"]
 [ext_resource type="Texture2D" uid="uid://dy87gfibshlqs" path="res://Assets/SBS - Texture Grid Pack/512x512/Gray/Prototype_Grid_Gray_09-512x512.png" id="7_a8852"]
 [ext_resource type="Texture2D" uid="uid://ddlrvm4u2xr41" path="res://Assets/SBS - Texture Grid Pack/512x512/Gray/Prototype_Grid_Gray_02-512x512.png" id="8_og8pq"]
+[ext_resource type="PackedScene" uid="uid://luuh3npukyg6" path="res://Scenes/Obstacle Course/Propeller/propeller.tscn" id="9_tt37p"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fdgh5"]
 panorama = ExtResource("1_y1p7r")
@@ -72,15 +73,15 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hykiy")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fvluf"]
-size = Vector3(1, 2.12877, 1)
+size = Vector3(1, 1.09968, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boxrr"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0to24"]
+albedo_texture = ExtResource("6_pgcrs")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j8b3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5l8a"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_feoeo"]
+albedo_texture = ExtResource("6_pgcrs")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_31u3x"]
 
@@ -105,11 +106,11 @@ heightmap_scale = 1.0
 heightmap_texture = SubResource("CompressedTexture2D_040qo")
 uv1_scale = Vector3(1, 1, 2.08165e-12)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yi064"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clgvt"]
+albedo_texture = ExtResource("6_pgcrs")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bng8c"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfhrg"]
+albedo_texture = ExtResource("6_pgcrs")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i5u1k"]
 
@@ -135,14 +136,14 @@ albedo_texture = ExtResource("8_og8pq")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lo6wt"]
 albedo_texture = ExtResource("8_og8pq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ar44a"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d6x8e"]
+albedo_texture = ExtResource("6_pgcrs")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87ec4"]
-albedo_texture = ExtResource("2_dshw8")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51f3l"]
+albedo_texture = ExtResource("6_pgcrs")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uuall"]
-albedo_texture = ExtResource("7_a8852")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqg0p"]
+albedo_texture = ExtResource("6_pgcrs")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwdd7"]
 albedo_texture = ExtResource("6_4mclt")
@@ -150,8 +151,8 @@ albedo_texture = ExtResource("6_4mclt")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jesoq"]
 albedo_texture = ExtResource("7_a8852")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f07rm"]
-albedo_texture = ExtResource("7_a8852")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nhlly"]
+albedo_texture = ExtResource("6_pgcrs")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igrro"]
 albedo_texture = ExtResource("8_og8pq")
@@ -234,12 +235,12 @@ mesh = SubResource("ArrayMesh_n40os")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ladder"]
-transform = Transform3D(2.60984, 0, 0, 0, 9.93239, 0, 0, 0, 0.82336, 1.69217, 5.89157, 34.694)
+transform = Transform3D(2.60984, 0, 0, 0, 9.93239, 0, 0, 0, 0.82336, 1.69217, 10.8526, 34.694)
 shape = SubResource("BoxShape3D_fvluf")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0.720551, -0.693401, 2.41849e-16, 0.693401, 0.720551, 1, 3.14963e-08, -3.03095e-08, 10.1625, -4.88413, 1.28104)
-material_override = SubResource("StandardMaterial3D_boxrr")
+material_override = SubResource("StandardMaterial3D_0to24")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -248,7 +249,7 @@ material = SubResource("StandardMaterial3D_2j8b3")
 
 [node name="CSGBox3D1" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.272187, -0.0393219, 1.42635)
-material_override = SubResource("StandardMaterial3D_o5l8a")
+material_override = SubResource("StandardMaterial3D_feoeo")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -257,7 +258,7 @@ material = SubResource("StandardMaterial3D_d4e5l")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.920218, 0.391405, 0, -0.391405, 0.920218, -0.283656, 2.63674, 14.659)
-material_override = SubResource("StandardMaterial3D_yi064")
+material_override = SubResource("StandardMaterial3D_clgvt")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -266,7 +267,7 @@ material = SubResource("StandardMaterial3D_2j8b3")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2722, 5.35225, 13.8866)
-material_override = SubResource("StandardMaterial3D_bng8c")
+material_override = SubResource("StandardMaterial3D_wfhrg")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -329,7 +330,7 @@ material = SubResource("StandardMaterial3D_2j8b3")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2722, 5.35225, 27.9009)
-material_override = SubResource("StandardMaterial3D_ar44a")
+material_override = SubResource("StandardMaterial3D_d6x8e")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -338,7 +339,7 @@ material = SubResource("StandardMaterial3D_2j8b3")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.231006, 5.35225, 27.9009)
-material_override = SubResource("StandardMaterial3D_87ec4")
+material_override = SubResource("StandardMaterial3D_51f3l")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -347,7 +348,7 @@ material = SubResource("StandardMaterial3D_2j8b3")
 
 [node name="CSGBox3D13" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.934698, 16.0083, 41.8394)
-material_override = SubResource("StandardMaterial3D_uuall")
+material_override = SubResource("StandardMaterial3D_iqg0p")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -382,7 +383,42 @@ material = SubResource("ShaderMaterial_svngq")
 
 [node name="CSGBox3D15" type="CSGBox3D" parent="Ladder Wall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 16.0083, 2.08165e-12)
-material_override = SubResource("StandardMaterial3D_f07rm")
+material_override = SubResource("StandardMaterial3D_nhlly")
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(14.0526, 1, 14)
+material = SubResource("StandardMaterial3D_2j8b3")
+
+[node name="Ladder Wall2" type="Node3D" parent="."]
+transform = Transform3D(-0.999606, 3.58437e-16, 0.0280613, 3.48787e-16, 1, -3.48787e-16, -0.0280613, -3.38862e-16, -0.999606, -21.3018, 15.6685, -12.6076)
+
+[node name="ladder2" type="Area3D" parent="Ladder Wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 11.0387, -7.07272)
+script = ExtResource("5_b6p5d")
+
+[node name="low" type="MeshInstance3D" parent="Ladder Wall2/ladder2"]
+transform = Transform3D(5.50357, 0, 0, 0, 0, 5.49299, 0, -2.64467, 0, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+material_override = SubResource("StandardMaterial3D_rwdd7")
+mesh = SubResource("ArrayMesh_n40os")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder Wall2/ladder2"]
+transform = Transform3D(2.60984, 0, 0, 0, 9.93239, 0, 0, 0, 0.82336, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("BoxShape3D_fvluf")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Ladder Wall2"]
+transform = Transform3D(-4.37114e-08, 3.48787e-16, 0.999999, 3.48787e-16, 0.999999, -3.48787e-16, -1, 3.48787e-16, -4.37114e-08, 2.08165e-12, 11.1834, -6.53043)
+material_override = SubResource("StandardMaterial3D_jesoq")
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(1, 10.5584, 14)
+material = SubResource("ShaderMaterial_svngq")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Ladder Wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 16.0083, 2.08165e-12)
+material_override = SubResource("StandardMaterial3D_nhlly")
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -425,8 +461,14 @@ collision_mask = 3
 size = Vector3(12, 1, 14)
 material = SubResource("StandardMaterial3D_2j8b3")
 
+[node name="propeller" parent="." instance=ExtResource("9_tt37p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.3933, 24.3024, 7.84866)
+speed = 0.8
+
 [connection signal="body_entered" from="fall_buffer" to="fall_buffer" method="_on_body_entered"]
 [connection signal="body_shape_entered" from="ladder" to="ladder" method="_on_body_shape_entered"]
 [connection signal="body_shape_exited" from="ladder" to="ladder" method="_on_body_shape_exited"]
 [connection signal="body_shape_entered" from="Ladder Wall/ladder2" to="Ladder Wall/ladder2" method="_on_body_shape_entered"]
 [connection signal="body_shape_exited" from="Ladder Wall/ladder2" to="Ladder Wall/ladder2" method="_on_body_shape_exited"]
+[connection signal="body_shape_entered" from="Ladder Wall2/ladder2" to="Ladder Wall2/ladder2" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="Ladder Wall2/ladder2" to="Ladder Wall2/ladder2" method="_on_body_shape_exited"]

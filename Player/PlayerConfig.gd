@@ -7,6 +7,7 @@ var _gravity: float = -9.8
 @export var sprint_speed: float = 10
 @export var jump_velocity: float = 9
 @export var climb_speed: float = 4
+@export var toggle_sprint: bool = false
 @export var mouse_sensitivity: float = 0.1
 @export var controller_sensitivity: float = 1000
 @export var controller_look_smoothness: float = 0.2
