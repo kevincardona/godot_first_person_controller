@@ -12,7 +12,10 @@ The goal of this repo is to have dynamic player controllers to be used in many d
 ## INCLUDES
 * Player Configuration
 * Smooth movement
-* Item pick-up/throw
+* Sprinting mechanics
+* Head bobbing
+* Item pick-up/throwing
+* Item interaction
 * Air control
 * Coyote timer
 * Ladder movement
@@ -22,4 +25,4 @@ The goal of this repo is to have dynamic player controllers to be used in many d
 <br>
 
 --------------------------------
-> Day 5-10 of Godot
+> Day 5-11 of Godot

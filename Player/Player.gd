@@ -10,7 +10,6 @@ signal open_game_menu
 var gravity
 var speed = 0
 var sprinting = false
-var toggled_sprint = false
 var coyote_timer = 0.0
 var can_jump = true
 var picked_up_object = false
@@ -87,7 +86,7 @@ func handle_sprinting(delta):
 		sprinting = true
 		speed = config.sprint_speed
 		camera.fov = lerp(camera.fov, config.run_camera_fov, config.camera_fov_transition_speed * delta)
-	elif move_dir.length() < 0.1:
+	elif move_dir.length() < 0.1 || not config.toggle_sprint:
 		sprinting = false
 		speed = config.base_speed
 		camera.fov = lerp(camera.fov, config.walk_camera_fov, config.camera_fov_transition_speed * delta)
