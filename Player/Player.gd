@@ -5,7 +5,6 @@ signal open_game_menu
 @export var player_index: int = 0
 @export var player_name: String = "Steve"
 @export var config: PlayerConfig = null
-@export var inventory: Inventory = null
 
 var gravity
 var speed = 0
@@ -13,7 +12,6 @@ var sprinting = false
 var coyote_timer = 0.0
 var can_jump = true
 var picked_up_object = false
-var inventory_opened = false
 var freeze_movement = false
 var ladders_entered = 0
 
@@ -41,7 +39,6 @@ func _ready():
 func _physics_process(delta):
 	if config == null:
 		return
-	handle_inventory(delta)
 	if !freeze_movement:
 		handle_sprinting(delta)
 		handle_interaction(delta)
@@ -49,22 +46,6 @@ func _physics_process(delta):
 		handle_movement(delta)
 		handle_gravity_and_jumping(delta)
 		move_and_slide()
-
-# Handlers
-func handle_inventory(delta):
-	if Input.is_action_just_released(config.open_inventory):
-		if inventory == null:
-			push_warning("Player tried to open the inventory but doesn't have one!")
-			return
-		if not inventory_opened:
-			inventory.open()
-			inventory_opened = true
-			freeze_movement = true
-		else:
-			inventory.close()
-			inventory_opened = false
-			freeze_movement = false
-			
 
 func handle_interaction(delta):
 	if reach.is_colliding():
